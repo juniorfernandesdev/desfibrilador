@@ -20,87 +20,46 @@ const DURATION = 5000;
 const PATTERN = [0, 5000, 0, 0];
 const Message = '';
 
-export default class ContentDea extends Component {
-  constructor() {
-    super();
-    this.state = {
-      number: 0,
-      Power: false,
-      Message: '',
-    };
-    this.timer = null;
-    this.addOne = this.addOne.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
-  }
-
-  powerOnOf = () => {
-    this.setState(!Power);
-  };
-
-  startVibration = () => {
-    if (!this.Power) {
-      Vibration.vibrate(PATTERN);
-    }
-  };
-
-  stopVibration = () => {
-    Vibration.cancel();
-  };
-
-  addOne() {
-    this.setState({ number: this.state.number + 1 });
-    // this.timer = setTimeout(this.addOne, 200);
-  }
-
-  stopTimer() {
-    clearTimeout(this.timer);
-  }
-
-  functionCombined = () => {
-    this.startVibration();
-    this.addOne();
-  };
-
-  render() {
-    return (
-      <>
-        <Container>
-          <HeaderContentDea>
-            <View style={{ alignContent: 'space-between' }}>
-              <Text
-                style={{ color: '#ED3219', fontWeight: 'bold', fontSize: 21 }}
-              >
-                DESFIBRILADOR - DEA
-              </Text>
-              <Text style={{ color: '#403B36', fontSize: 15 }}>
-                Desfibrilador Externo Automático
-              </Text>
-            </View>
-            <IconTwo name="gamepad-round" size={40} color="#ED3219" />
-          </HeaderContentDea>
-
-          <Display>
-            <StatusTop>
-              <CountChock>{this.state.number}</CountChock>
-              <Healter>
-                <IconTwo name="heart-pulse" size={30} color="#c0c3cf" />
-              </Healter>
-            </StatusTop>
-            <StatusDea>Pronto</StatusDea>
-            <StatusButton>
-              <Text>Analisando...</Text>
-            </StatusButton>
-          </Display>
-          <View style={{ alignContent: 'center', alignItems: 'center' }}>
-            <ButtonChock
-              onPress={this.functionCombined}
-              onPressOut={this.stopTimer}
+export default function ContentDea({ number, status, message, functionCombined, stopTimer, power }) {
+  return (
+    <>
+      <Container>
+        <HeaderContentDea>
+          <View style={{ alignContent: 'space-between' }}>
+            <Text
+              style={{ color: '#ED3219', fontWeight: 'bold', fontSize: 21 }}
             >
-              <Icon name="flash-on" size={55} color="rgba(255, 255, 255, 1)" />
-            </ButtonChock>
+              DESFIBRILADOR - DEA
+            </Text>
+            <Text style={{ color: '#403B36', fontSize: 15 }}>
+              Desfibrilador Externo Automático
+            </Text>
           </View>
-        </Container>
-      </>
-    );
-  }
+          <IconTwo name="gamepad-round" size={40} color="#ED3219" />
+        </HeaderContentDea>
+
+        <Display>
+          <StatusTop>
+            <CountChock>{number}</CountChock>
+            <Healter>
+              <IconTwo name="heart-pulse" size={30} color="#c0c3cf" />
+            </Healter>
+          </StatusTop>
+          <StatusDea>{message}</StatusDea>
+          <StatusButton>
+            <Text>{status}</Text>
+          </StatusButton>
+        </Display>
+        <View style={{ alignContent: 'center', alignItems: 'center' }}>
+          <ButtonChock
+            onPress={functionCombined}
+            onPressOut={stopTimer}
+            enabled={power}
+          >
+            <Icon name="flash-on" size={55} color="rgba(255, 255, 255, 1)" />
+          </ButtonChock>
+        </View>
+      </Container>
+    </>
+  )
 }
