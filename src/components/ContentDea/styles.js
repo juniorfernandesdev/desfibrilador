@@ -58,4 +58,6 @@ export const StatusButton = styled.Text`
 
 export const StatusDea = styled.Text`
   color: #c0c3cf;
+  text-align: center;
+  padding-top: 5px;
 `;

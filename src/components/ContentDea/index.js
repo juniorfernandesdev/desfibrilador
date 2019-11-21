@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Text, View, Vibration } from 'react-native';
+import { Text, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,11 +16,14 @@ import {
   StatusDea,
 } from './styles';
 
-const DURATION = 5000;
-const PATTERN = [0, 5000, 0, 0];
-const Message = '';
-
-export default function ContentDea({ number, status, message, functionCombined, stopTimer, power }) {
+export default function ContentDea({
+  number,
+  status,
+  message,
+  functionCombined,
+  stopTimer,
+  power,
+}) {
   return (
     <>
       <Container>
@@ -61,5 +64,5 @@ export default function ContentDea({ number, status, message, functionCombined, 
         </View>
       </Container>
     </>
-  )
+  );
 }

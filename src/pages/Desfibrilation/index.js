@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Vibration, Text } from 'react-native';
 
 import { Container } from './styles';
 
@@ -7,14 +8,17 @@ import Header from '../../components/Header';
 import ContentDea from '../../components/ContentDea';
 import Footer from '../../components/Footer';
 
-export default class User extends Component() {
-  constructor() {
-    super();
+const DURATION = 5000;
+const PATTERN = [0, 5000, 0, 0];
+
+export default class User extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       number: 0,
       Power: false,
       Message: '',
-      status: ''
+      status: '',
     };
     this.timer = null;
     this.addOne = this.addOne.bind(this);
@@ -23,70 +27,39 @@ export default class User extends Component() {
 
   togglePower = () => {
     this.setState({ Power: !this.state.Power });
-    if (Power) {
-      setTimeout(
-        () => this.setState({ Message: 'Analisando...' }),
-        1000
-      )
-      setTimeout(
-        () => this.setState({ Message: 'Verificando...' }),
-        3000
-      )
-      setTimeout(
-        () => this.setState({ Message: 'Pronto' }),
-        5000
-      )
+    if (!this.state.Power) {
+      setTimeout(() => this.setState({ Message: 'Analisando...' }), 1000);
+      setTimeout(() => this.setState({ Message: 'Verificando...' }), 3000);
+      setTimeout(() => this.setState({ Message: 'Pronto' }), 5000);
     } else {
-      this.setState({ Message: 'Off' })
+      this.setState({ Message: 'Off' });
+      this.setState({ number: 0 });
     }
   };
 
   startVibration = () => {
-    if (!this.Power) {
-      Vibration.vibrate(PATTERN);
-    }
+    Vibration.vibrate(PATTERN);
   };
 
   stopVibration = () => {
     Vibration.cancel();
   };
 
-  addOne() {
+  addOne = () => {
     this.setState({ number: this.state.number + 1 });
-  }
+  };
 
-  stopTimer() {
+  stopTimer = () => {
     clearTimeout(this.timer);
-  }
+  };
 
   functionCombined = () => {
     this.startVibration();
     this.addOne();
   };
 
-  // componentDidUpdate (_, prevState) {
-  //   const { status } = this.state
-
-  //   if (prevState.status !== status) {
-  //     switch (status): {
-  //       case '1': {
-  //         this.setState({ Message: 'Analisando...' })
-  //         break
-  //       }
-  //       case '2': {
-  //         this.setState({ Message: 'Verificando...' })
-  //         break
-  //       }
-  //       case '3': {
-  //         this.setState({ Message: 'Pronto' })
-  //         break
-  //       }
-  //     }
-  //   }
-  // }
-
   render() {
-    const { number, Message, status, Power } = this.state
+    const { number, Message, status, Power } = this.state;
 
     return (
       <>
